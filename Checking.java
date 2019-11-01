@@ -7,8 +7,7 @@ public class Checking extends Account
  
   Checking(String name, String sSn, double initDeposit)
   {
-    System.out.println("ACCOUNT TYPE: CHECKING");
-    super(name,ssn,balance);
+    super(name,sSn,initDeposit);
     accountNumber="2"+accountNumber;
     setDebitCard();
   }
@@ -22,13 +21,13 @@ public class Checking extends Account
   {
     System.out.println("ACCOUNT TYPE:CHECKING");
     super.showInfo();
-    System.out.println("DEBIT CARD NUMBER:"+debitCardNumber+"\nDEBIT CARD PIN:"+debitCardPin); 
+    System.out.println("DEBIT CARD NUMBER:"+debitCardNumber+"\nDEBIT CARD PIN:"+debitCardPIN); 
   }
 	
   private void setDebitCard()
   {
     debitCardNumber=(int)(Math.random()*Math.pow(10,12));
-    debitCardPin=(int)(Math.random()*Math.pow(10,4));
+    debitCardPIN=(int)(Math.random()*Math.pow(10,4));
   }
 
 }
