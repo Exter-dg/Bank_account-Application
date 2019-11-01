@@ -28,7 +28,7 @@ class BankAccountApp
       }
       else if(accountType.equals("Checking"))
       {
-      //  accounts.add(new Checking(name,sSN,initDeposit));
+        accounts.add(new Checking(name,sSN,initDeposit));
       }
       else
         System.out.println("Error Reading Account Type");
