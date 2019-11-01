@@ -37,9 +37,9 @@ public abstract class Account implements IBaseRate
 
   public void showInfo()
   {
-    Systemm.out.println("Name : " + name +
-                          "\nAccount Number" + accountNumber +
-                          "\nBalance" + balance +
+    System.out.println("Name : " + name +
+                          "\nAccount Number : " + accountNumber +
+                          "\nBalance : " + balance +
                           "\nRate : "+rate
                         );
   }
@@ -62,7 +62,7 @@ public abstract class Account implements IBaseRate
 
   public void withdraw(double amount)
   {
-    balance-+amount;
+    balance-=amount;
   }
 
   public void transfer(String receiver , double amount)
