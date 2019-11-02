@@ -2,9 +2,9 @@ package bankaccountapp;
 
 public class Checking extends Account
 {
-  private int debitCardNumber;
+  private long debitCardNumber;
   private int debitCardPIN;
- 
+
   Checking(String name, String sSn, double initDeposit)
   {
     super(name,sSn,initDeposit);
@@ -16,17 +16,17 @@ public class Checking extends Account
   {
     rate=0.15*getBaseRate();
   }
-	
+
   public void showInfo()
   {
     System.out.println("ACCOUNT TYPE:CHECKING");
     super.showInfo();
-    System.out.println("DEBIT CARD NUMBER:"+debitCardNumber+"\nDEBIT CARD PIN:"+debitCardPIN); 
+    System.out.println("DEBIT CARD NUMBER:"+debitCardNumber+"\nDEBIT CARD PIN:"+debitCardPIN);
   }
-	
+
   private void setDebitCard()
   {
-    debitCardNumber=(int)(Math.random()*Math.pow(10,12));
+    debitCardNumber=(long)(Math.random()*Math.pow(10,12));
     debitCardPIN=(int)(Math.random()*Math.pow(10,4));
   }
 
