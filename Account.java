@@ -32,6 +32,8 @@ public abstract class Account implements IBaseRate
     String lastTwoSSN = sSN.substring(sSN.length()-2 , sSN.length());
     int uniqueID = index;
     int rand = (int)(Math.random() * Math.pow(10,3));
+    if(rand <100)
+      rand+=100;
     return lastTwoSSN + uniqueID + rand;
   }
 
@@ -43,6 +45,32 @@ public abstract class Account implements IBaseRate
                           "\nRate : "+rate
                         );
   }
+
+//------------------Getter methods-----------------//
+
+  public String getName()
+  {
+    return name;
+  }
+
+  public String getsSN()
+  {
+    return sSN;
+  }
+
+  public double getBalance()
+  {
+    return balance;
+  }
+
+//------------------------------------------------//
+  //Pseudo method just to call the writeToFile method in child classes using
+  //Account class reference to child class object
+  public String writeToFile()
+  {
+    return name;
+  }
+
 
   public void compound()
   {

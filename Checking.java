@@ -4,11 +4,13 @@ public class Checking extends Account
 {
   private long debitCardNumber;
   private int debitCardPIN;
+  public String accountType;
 
   Checking(String name, String sSn, double initDeposit)
   {
     super(name,sSn,initDeposit);
     accountNumber="2"+accountNumber;
+    accountType = new String("Checking");
     setDebitCard();
   }
 
@@ -28,6 +30,15 @@ public class Checking extends Account
   {
     debitCardNumber=(long)(Math.random()*Math.pow(10,12));
     debitCardPIN=(int)(Math.random()*Math.pow(10,4));
+  }
+
+  public String writeToFile()
+  {
+    String temp = new String();
+    temp = getName() + ',' + accountType + ',' + accountNumber + ',' +
+           getsSN() + ',' + getBalance() + ',' + debitCardNumber +
+           ',' + debitCardPIN;
+    return temp;
   }
 
 }

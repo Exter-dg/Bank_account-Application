@@ -4,11 +4,13 @@ public class Savings extends Account
 {
   private int safetyDepositBoxID;
   private int safetyDepositBoxKey;
+  public String accountType;
 
   public Savings(String name, String sSN , double initDeposit)
   {
     super(name , sSN , initDeposit);
     accountNumber = "1" + accountNumber;
+    accountType = new String("Savings");
     setSafetyDepositBox();
   }
 
@@ -30,5 +32,14 @@ public class Savings extends Account
     System.out.println("Features" +
                       "\nSafety Deposit Box ID : "+safetyDepositBoxID+
                       "\nSafety Deposit Box Key : "+safetyDepositBoxKey);
+  }
+
+  public String writeToFile()
+  {
+    String temp = new String();
+    temp = getName() + ',' + accountType + ',' + accountNumber + ',' +
+           getsSN() + ',' + getBalance() + ',' + safetyDepositBoxID +
+           ',' + safetyDepositBoxKey;
+    return temp;
   }
 }

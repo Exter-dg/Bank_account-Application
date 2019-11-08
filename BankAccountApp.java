@@ -4,6 +4,9 @@ import utilities.*;
 import java.io.File;
 import java.util.List;
 import java.util.LinkedList;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 class BankAccountApp
 {
@@ -34,6 +37,25 @@ class BankAccountApp
         System.out.println("Error Reading Account Type");
     }
 
+
+// Writing to new file
+    for(Account obj : accounts)
+    {
+      String temp = obj.writeToFile();
+      try
+      {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(new File("AccountInfo.csv"),true));
+        bw.write(temp);
+        bw.newLine();
+        bw.close();
+      }
+      catch(IOException e)
+      {
+        e.printStackTrace();
+      }
+    }
+
+//Displaying the account info
     for(Account acc : accounts)
     {
       System.out.println("\n*************\n");
