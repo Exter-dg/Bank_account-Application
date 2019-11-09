@@ -28,7 +28,7 @@ class BankAccountApp
     double initDeposit;
     int choice;
     char ch = 'y';
-    //-----------------------------------------
+    //------------------------------------------
 
     for(String[] accountHolder : newAccountHolders)
     {
