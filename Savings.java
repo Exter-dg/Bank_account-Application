@@ -27,11 +27,14 @@ public class Savings extends Account
 
   public void showInfo()
   {
-    System.out.println("Account Type : Savings");
+    System.out.println("\n____________________________________________________________________________________________");
+    System.out.println("\nAccount Type : Savings");
     super.showInfo();
     System.out.println("Features" +
                       "\nSafety Deposit Box ID : "+safetyDepositBoxID+
                       "\nSafety Deposit Box Key : "+safetyDepositBoxKey);
+    System.out.println("\n____________________________________________________________________________________________");
+
   }
 
   public String writeToFile()
