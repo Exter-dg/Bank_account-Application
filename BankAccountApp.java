@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.List;
 import java.util.LinkedList;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
@@ -65,24 +64,8 @@ class BankAccountApp
     }
 
 
-// Writing to new file
-    for(Account obj : accounts)
-    {
-      temp = obj.writeToFile();
-      try
-      {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(new File("AccountInfo.csv"),true));
-        bw.write(temp);
-        bw.newLine();
-        bw.close();
-      }
-      catch(IOException e)
-      {
-        e.printStackTrace();
-      }
-    }
+    updateFile(accounts);
 
-//---------------------_ADDing accountType-------------------------
 
     while(ch == 'y' || ch == 'Y')
     {
@@ -122,30 +105,31 @@ class BankAccountApp
 
                 if(accountType.equalsIgnoreCase("Savings"))
                 {
-                  obj = new Savings(name,sSN,initDeposit);
-                  accounts.add(obj);
-                  temp = obj.writeToFile();
+                    obj = new Savings(name,sSN,initDeposit);
+                    accounts.add(obj);
+                    temp = obj.writeToFile();
                 }
                 else if(accountType.equalsIgnoreCase("Checking"))
                 {
-                  obj = new Checking(name,sSN,initDeposit);
-                  accounts.add(obj);
-                  temp = obj.writeToFile();
+                    obj = new Checking(name,sSN,initDeposit);
+                    accounts.add(obj);
+                    temp = obj.writeToFile();
                 }
                 //write code to handle when account type is none of these
 
                 try
                 {
-                  BufferedWriter bw = new BufferedWriter(new FileWriter(new File("AccountInfo.csv"),true));
-                  bw.write(temp);
-                  bw.newLine();
-                  bw.close();
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(new File("AccountInfo.csv"),true));
+                    bw.write(temp);
+                    bw.newLine();
+                    bw.close();
                 }
                 catch(IOException e)
                 {
-                  e.printStackTrace();
+                    e.printStackTrace();
                 }
                 break;
+
 
           case 2:
                 System.out.print("\033\143");
@@ -159,62 +143,65 @@ class BankAccountApp
                 {
                   if(accountno.equals(acc.accountNumber))
                   {
-                    flag1=1;
-                    System.out.println("\n____________________________________________________________________________________________");
-                    System.out.println("\n1.  Deposit Money\n2.  Withdraw Money\n3.  Transfer Money");
-                    System.out.println("\n____________________________________________________________________________________________");
-                    System.out.print("\nEnter your Choice : ");
-                    choice=in.nextInt();
+                      flag1=1;
+                      System.out.println("\n____________________________________________________________________________________________");
+                      System.out.println("\n1.  Deposit Money\n2.  Withdraw Money\n3.  Transfer Money");
+                      System.out.println("\n____________________________________________________________________________________________");
+                      System.out.print("\nEnter your Choice : ");
+                      choice=in.nextInt();
 
 
 
-                    switch(choice)
-                    {
-                        case 1:
-                          System.out.println("\n____________________________________________________________________________________________");
-                          System.out.print("\nEnter the amount you want to deposit : ");
-                          amount=in.nextInt();
-                          acc.deposit(amount);
-                          acc.printBalance();
-                          updateFile(accounts,temp);
-                          break;
+                      switch(choice)
+                      {
+                          case 1:
+                            System.out.println("\n____________________________________________________________________________________________");
+                            System.out.print("\nEnter the amount you want to deposit : ");
+                            amount=in.nextInt();
+                            acc.deposit(amount);
+                            acc.printBalance();
+                            updateFile(accounts);
+                            break;
 
-                        case 2:
-                          System.out.println("\n____________________________________________________________________________________________");
-                          System.out.print("\nEnter the amount you want to withdraw : ");
-                          amount=in.nextInt();
-                          acc.withdraw(amount);
-                          acc.printBalance();
-                          updateFile(accounts,temp);
-                          break;
+                          case 2:
+                            System.out.println("\n____________________________________________________________________________________________");
+                            System.out.print("\nEnter the amount you want to withdraw : ");
+                            amount=in.nextInt();
+                            acc.withdraw(amount);
+                            acc.printBalance();
+                            updateFile(accounts);
+                            break;
 
-                        case 3:
-                          System.out.println("\n____________________________________________________________________________________________");
-                          System.out.print("\nEnter the name of the receiver you want to transfer money to : ");
-                          in.nextLine();
-                          String receiver=new String();
-                          receiver=in.nextLine();
-                          int flag=0;
-                          for(Account Acc : accounts)
-                          {
-                            if(receiver.equalsIgnoreCase(Acc.getName()))
+                          case 3:
+                            System.out.println("\n____________________________________________________________________________________________");
+                            System.out.print("\nEnter the name of the receiver you want to transfer money to : ");
+                            in.nextLine();
+                            String receiver=new String();
+                            receiver=in.nextLine();
+                            int flag=0;
+                            for(Account Acc : accounts)
                             {
-                              System.out.println("\n____________________________________________________________________________________________");
-                              System.out.print("\nEnter the amount you want to transfer : ");
-                              amount=in.nextInt();
-                              acc.transfer(receiver,amount);
-                              acc.printBalance();
-                              updateFile(accounts,temp);
-                              flag=1;
-                              break;
+                              if(receiver.equalsIgnoreCase(Acc.getName()))
+                              {
+                                System.out.println("\n____________________________________________________________________________________________");
+                                System.out.print("\nEnter the amount you want to transfer : ");
+                                amount=in.nextInt();
+                                acc.transfer(receiver,amount);
+                                acc.printBalance();
+                                updateFile(accounts);
+                                flag=1;
+                                break;
+                              }
                             }
                             if(flag==0)
                             System.out.println("\n____________________________________________________________________________________________");
                             System.out.println("\nAccount with the name "+receiver+" could not be found in the System ");
-                          }
-                          break;  // to exit from the case 3 of inner switch case
-                    }
-                    break;  // to exit from the for each loop once the account number has been found
+                            break;  // to exit from the case 3 of inner switch case
+
+                          default:
+                            System.out.println("Invalid Choice !!!");
+                      }
+                      break;  // to exit from the for each loop once the account number has been found
                   }
                 }
                   if(flag1==0)
@@ -234,8 +221,8 @@ class BankAccountApp
                 {
                   if(accountno.equals(acc.accountNumber))
                   {
-                    acc.showInfo();
-                    System.out.println();
+                      acc.showInfo();
+                      System.out.println();
                   }
                 }
                 break;
@@ -253,52 +240,24 @@ class BankAccountApp
                 // To delete a account from the AccountInfo file
                 int flag =0;
                 System.out.println("\n____________________________________________________________________________________________");
-                System.out.print("Enter the account number to be deleted : ");
+                System.out.print("\nEnter the account number to be deleted : ");
                 in.nextLine();
                 accountno=in.nextLine();
                 for(Account acc : accounts)
                 {
                   if(accountno.equals(acc.accountNumber))
                   {
-                    flag = 1;
-                    accounts.remove(acc);
-                    //overwriting File
-                    //clearing the contents of the File
-                    try
-                    {
-                      PrintWriter pw = new PrintWriter("AccountInfo.csv");
-                      pw.close();
-                    }
-                    catch(FileNotFoundException e)
-                    {
-                      System.out.println("File not Found");
-                    }
-
-
-                    //writing the new contents to the File
-                    for(Account ob : accounts)
-                    {
-                      temp = ob.writeToFile();
-                      try
-                      {
-                        BufferedWriter bw = new BufferedWriter(new FileWriter(new File("AccountInfo.csv"),true));
-                        bw.write(temp);
-                        bw.newLine();
-                        bw.close();
-                      }
-                      catch(IOException e)
-                      {
-                        e.printStackTrace();
-                      }
-                    }
-                    break;
+                      flag = 1;
+                      accounts.remove(acc);
+                      updateFile(accounts);
+                      break;
                   }
                 }
 
                 //If account does not exists in the file
                 if(flag == 0)
                 {
-                  System.out.println("Account Does not Exists");
+                    System.out.println("\nAccount Does not Exists");
                 }
                 break;
 
@@ -313,8 +272,11 @@ class BankAccountApp
     }
   }//end of main
 
-static void updateFile(List<Account> accounts,String temp)
+
+
+static void updateFile(List<Account> accounts)
   {
+    String temp = new String();
     try
     {
       BufferedWriter b = new BufferedWriter(new FileWriter(new File("AccountInfo.csv"),false));
@@ -324,6 +286,7 @@ static void updateFile(List<Account> accounts,String temp)
     {
       e.printStackTrace();
     }
+
     for(Account obj : accounts)
     {
       temp = obj.writeToFile();
