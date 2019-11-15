@@ -92,9 +92,13 @@ public abstract class Account implements IBaseRate
     balance += amount;
   }
 
-  public void withdraw(double amount)
+  public int withdraw(double amount)
   {
-    balance-=amount;
+    if(balance - amount < 0)
+      return -1;
+    else
+      balance-=amount;
+    return 0;
   }
 
 
