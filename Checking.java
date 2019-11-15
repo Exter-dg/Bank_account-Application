@@ -1,4 +1,4 @@
-package bankaccountapp;
+ package bankaccountapp;
 
 public class Checking extends Account
 {
@@ -12,6 +12,7 @@ public class Checking extends Account
     accountNumber="2"+accountNumber;
     accountType = new String("Checking");
     setDebitCard();
+
   }
 
   public void setRate()
@@ -21,9 +22,11 @@ public class Checking extends Account
 
   public void showInfo()
   {
-    System.out.println("ACCOUNT TYPE:CHECKING");
+    System.out.println("\n____________________________________________________________________________________________");
+    System.out.println("\nACCOUNT TYPE:CHECKING");
     super.showInfo();
     System.out.println("DEBIT CARD NUMBER:"+debitCardNumber+"\nDEBIT CARD PIN:"+debitCardPIN);
+    System.out.println("\n____________________________________________________________________________________________");
   }
 
   private void setDebitCard()

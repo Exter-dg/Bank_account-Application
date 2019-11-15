@@ -39,12 +39,19 @@ public abstract class Account implements IBaseRate
 
   public void showInfo()
   {
-    System.out.println("Name : " + name +
-                          "\nAccount Number : " + accountNumber +
-                          "\nBalance : " + balance +
-                          "\nRate : "+rate
+    System.out.println("\nName                   :   " + name +
+                          "\nAccount Number         :   " + accountNumber +
+                          "\nSocial Security Number :   " + sSN +
+                          "\nBalance                :   " + balance +
+                          "\nRate                   :   "+rate
                         );
   }
+
+  public void compound()
+ {
+   double interest = balance * (rate/100);
+   balance+=interest;
+ }
 
 //------------------Getter methods-----------------//
 
@@ -63,19 +70,16 @@ public abstract class Account implements IBaseRate
     return balance;
   }
 
+  public String getAccountNumber()
+  {
+    return accountNumber;
+  }
 //------------------------------------------------//
   //Pseudo method just to call the writeToFile method in child classes using
   //Account class reference to child class object
   public String writeToFile()
   {
     return name;
-  }
-
-
-  public void compound()
-  {
-    double interest = balance * (rate/100);
-    balance+=interest;
   }
 
   public void printBalance()
@@ -93,9 +97,5 @@ public abstract class Account implements IBaseRate
     balance-=amount;
   }
 
-  public void transfer(String receiver , double amount)
-  {
-    balance-=amount;
-  }
 
 }
