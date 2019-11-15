@@ -72,7 +72,7 @@ class BankAccountApp
       //To clear the screen in Linux
       System.out.print("\033\143");
       System.out.println("____________________________________________________________________________________________");
-      System.out.println("\n1.  Add Account\n2.  Transactions\n3.  View Account\n4.  Display All Accounts\n5.  Delete Account\n");
+      System.out.println("\n1.  Add Account\n2.  Transactions\n3.  View Account\n4.  Delete Account\n5.  Calculate Interest\n6.  Display All Accounts\n");
       System.out.println("____________________________________________________________________________________________");
       System.out.print("\n\nEnter your Choice : ");
       choice = in.nextInt();
@@ -174,28 +174,38 @@ class BankAccountApp
 
                           case 3:
                             System.out.println("\n____________________________________________________________________________________________");
-                            System.out.print("\nEnter the name of the receiver you want to transfer money to : ");
+                            System.out.print("\nEnter the Account Number of the receiver you want to transfer money to : ");
                             in.nextLine();
                             String receiver=new String();
                             receiver=in.nextLine();
                             int flag=0;
                             for(Account Acc : accounts)
                             {
-                              if(receiver.equalsIgnoreCase(Acc.getName()))
+                              if(receiver.equalsIgnoreCase(Acc.getAccountNumber()))
                               {
-                                System.out.println("\n____________________________________________________________________________________________");
-                                System.out.print("\nEnter the amount you want to transfer : ");
-                                amount=in.nextInt();
-                                acc.transfer(receiver,amount);
-                                acc.printBalance();
-                                updateFile(accounts);
-                                flag=1;
-                                break;
+                                  System.out.println("\n____________________________________________________________________________________________");
+                                  System.out.print("\nEnter the amount you want to transfer : ");
+                                  amount=in.nextInt();
+                                  acc.withdraw(amount);
+                                  acc.printBalance();
+                                  for(Account Ac : accounts)
+                                  {
+                                    if(receiver.equals(Ac.getAccountNumber()))
+                                    {
+                                        Ac.deposit(amount);
+                                        Ac.printBalance();
+                                        break;
+                                    }
+                                  }
+                                  flag=1;
+                                  break;
                               }
                             }
                             if(flag==0)
-                            System.out.println("\n____________________________________________________________________________________________");
-                            System.out.println("\nAccount with the name "+receiver+" could not be found in the System ");
+                            {
+                                System.out.println("\n____________________________________________________________________________________________");
+                                System.out.println("\nAccount with Account Number "+receiver+" could not be found in the System ");
+                            }
                             break;  // to exit from the case 3 of inner switch case
 
                           default:
@@ -229,14 +239,6 @@ class BankAccountApp
 
           case 4:
                 System.out.print("\033\143");
-                for(Account acc : accounts)
-                {
-                  acc.showInfo();
-                }
-                break;
-
-          case 5:
-                System.out.print("\033\143");
                 // To delete a account from the AccountInfo file
                 int flag =0;
                 System.out.println("\n____________________________________________________________________________________________");
@@ -261,10 +263,26 @@ class BankAccountApp
                 }
                 break;
 
+          case 5:
+                System.out.print("\033\143");
+                for(Account Acc : accounts)
+                {
+                  Acc.compound();
+                }
+                System.out.println("\n____________________________________________________________________________________________");
+                System.out.println("\nInterest is Calculated !!!");
+                break;
 
+          case 6:
+                System.out.print("\033\143");
+                for(Account acc : accounts)
+                {
+                  acc.showInfo();
+                }
+                break;
 
           default:
-          System.out.println("\nInvalid Input !");
+                System.out.println("\nInvalid Input !");
       }
 
       System.out.println("\nEnter Y to continue : ");
