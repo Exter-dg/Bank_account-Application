@@ -321,3 +321,4 @@ static void updateFile(List<Account> accounts)
       }
     }
   }
+}
