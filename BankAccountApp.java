@@ -108,6 +108,7 @@ class BankAccountApp
                   }
                 } while (flag == 1);
 
+                initDeposit = 0;
                 do
                 {
                     flag =0;
@@ -129,10 +130,27 @@ class BankAccountApp
 
                 } while ( flag ==1 );
 
+                do
+                {
+                  flag =0;
+                  System.out.println("\n____________________________________________________________________________________________");
+                  System.out.print("\nEnter Intial Deposit Amount : ");
+                  try
+                  {
+                    initDeposit = in.nextDouble();//must be >=0
+                    if(initDeposit < 0)
+                    {
+                      flag =1;
+                      throw new MyException("\n\nInitial Deposit cannot be Negative !!!");
+                    }
+                  }
+                  catch(MyException e)
+                  {
+                    System.out.println(e);
+                  }
 
-                System.out.println("\n____________________________________________________________________________________________");
-                System.out.print("\nEnter Intial Deposit Amount : ");
-                initDeposit = in.nextDouble();//must be >=0
+                } while (flag == 1);
+
 
                 System.out.println("\n____________________________________________________________________________________________");
                 Account obj;
@@ -293,6 +311,7 @@ class BankAccountApp
 
           case 3:
                 System.out.print("\033\143");
+                flag =0;
                 System.out.println("\n____________________________________________________________________________________________");
                 System.out.print("\nEnter your Account Number : ");
                 in.nextLine();
@@ -301,9 +320,14 @@ class BankAccountApp
                 {
                   if(accountno.equals(acc.accountNumber))
                   {
+                      flag = 1;
                       acc.showInfo();
                       System.out.println();
                   }
+                }
+                if(flag == 0)
+                {
+                  System.out.println("\n\nAccount Number not Found !!!");
                 }
                 break;
 
