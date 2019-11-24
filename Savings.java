@@ -30,8 +30,7 @@ public class Savings extends Account
     System.out.println("\n____________________________________________________________________________________________");
     System.out.println("\nAccount Type : Savings");
     super.showInfo();
-    System.out.println("Features" +
-                      "\nSafety Deposit Box ID : "+safetyDepositBoxID+
+    System.out.println("Safety Deposit Box ID : "+safetyDepositBoxID+
                       "\nSafety Deposit Box Key : "+safetyDepositBoxKey);
     System.out.println("\n____________________________________________________________________________________________");
 

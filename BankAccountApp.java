@@ -40,6 +40,7 @@ class BankAccountApp
     int choice;
     char ch = 'y';
     String accountno;
+    int flag=0;
 
 
     //------------------------------------------
@@ -87,18 +88,69 @@ class BankAccountApp
                 System.out.print("\nEnter Name : ");
                 in.nextLine();
                 name = in.nextLine();
+                do
+                {
+                  try
+                  {
+                      System.out.println("\n____________________________________________________________________________________________");
+                      System.out.print("\nEnter Social Security Number : ");
+                      flag =0;
+                      sSN = in.nextLine();
+                      if(sSN.length()!=9)
+                      {
+                        flag =1;
+                        throw new MyException("\n\nSSN Length not equal to 9");
+                      }
+                  }
+                  catch(MyException e)
+                  {
+                    System.out.println(e);
+                  }
+                } while (flag == 1);
 
-                System.out.println("\n____________________________________________________________________________________________");
-                System.out.print("\nEnter Social Security Number : ");
-                sSN = in.nextLine();//yet to create own exeption if number is not 9 digit
+                initDeposit = 0;
+                do
+                {
+                    flag =0;
+                    System.out.println("\n____________________________________________________________________________________________");
+                    System.out.print("\nEnter Account Type : ");
+                    try
+                    {
+                        accountType = in.nextLine();
+                        if(!(accountType.equalsIgnoreCase("Savings") || accountType.equalsIgnoreCase("Checking")))
+                        {
+                          flag =1 ;
+                          throw new MyException("\n\nAccount Type Not Valid !!!");
+                        }
+                    }
+                    catch(MyException e)
+                    {
+                      System.out.println(e);
+                    }
 
-                System.out.println("\n____________________________________________________________________________________________");
-                System.out.print("\nEnter Account Type : ");
-                accountType = in.nextLine();
+                } while ( flag ==1 );
 
-                System.out.println("\n____________________________________________________________________________________________");
-                System.out.print("\nEnter Intial Deposit Amount : ");
-                initDeposit = in.nextDouble();//must be >=0
+                do
+                {
+                  flag =0;
+                  System.out.println("\n____________________________________________________________________________________________");
+                  System.out.print("\nEnter Intial Deposit Amount : ");
+                  try
+                  {
+                    initDeposit = in.nextDouble();//must be >=0
+                    if(initDeposit < 0)
+                    {
+                      flag =1;
+                      throw new MyException("\n\nInitial Deposit cannot be Negative !!!");
+                    }
+                  }
+                  catch(MyException e)
+                  {
+                    System.out.println(e);
+                  }
+
+                } while (flag == 1);
+
 
                 System.out.println("\n____________________________________________________________________________________________");
                 Account obj;
@@ -115,7 +167,6 @@ class BankAccountApp
                     accounts.add(obj);
                     temp = obj.writeToFile();
                 }
-                //write code to handle when account type is none of these
 
                 try
                 {
@@ -164,13 +215,32 @@ class BankAccountApp
                             break;
 
                           case 2:
-                            System.out.println("\n____________________________________________________________________________________________");
-                            System.out.print("\nEnter the amount you want to withdraw : ");
-                            amount=in.nextInt();
-                            acc.withdraw(amount);
-                            acc.printBalance();
-                            updateFile(accounts);
-                            break;
+                              int a;
+                              do
+                              {
+                                  System.out.println("\n____________________________________________________________________________________________");
+                                  System.out.print("\nEnter the amount you want to withdraw : ");
+                                  amount=in.nextInt();
+                                  flag = 0;
+                                  try
+                                  {
+                                    a = acc.withdraw(amount);
+                                    if(a == -1)
+                                    {
+                                      flag = 1;
+                                      throw new MyException("\n\nInvalid Transcation - Balance cannot be Negative");
+                                    }
+                                  }
+                                  catch(MyException e)
+                                  {
+                                    System.out.println(e);
+                                  }
+
+                              }while(flag == 1 );
+
+                              acc.printBalance();
+                              updateFile(accounts);
+                              break;
 
                           case 3:
                             System.out.println("\n____________________________________________________________________________________________");
@@ -178,15 +248,33 @@ class BankAccountApp
                             in.nextLine();
                             String receiver=new String();
                             receiver=in.nextLine();
-                            int flag=0;
+                            flag=0;
                             for(Account Acc : accounts)
                             {
                               if(receiver.equalsIgnoreCase(Acc.getAccountNumber()))
                               {
-                                  System.out.println("\n____________________________________________________________________________________________");
-                                  System.out.print("\nEnter the amount you want to transfer : ");
-                                  amount=in.nextInt();
-                                  acc.withdraw(amount);
+                                  do
+                                  {
+                                      System.out.println("\n____________________________________________________________________________________________");
+                                      System.out.print("\nEnter the amount you want to transfer : ");
+                                      amount=in.nextInt();
+                                      flag = 0;
+                                      try
+                                      {
+                                        a = acc.withdraw(amount);
+                                        if(a == -1)
+                                        {
+                                          flag = 1;
+                                          throw new MyException("\n\nInvalid Transcation - Balance cannot be Negative");
+                                        }
+                                      }
+                                      catch(MyException e)
+                                      {
+                                        System.out.println(e);
+                                      }
+
+                                  }while(flag == 1 );
+
                                   acc.printBalance();
                                   for(Account Ac : accounts)
                                   {
@@ -223,6 +311,7 @@ class BankAccountApp
 
           case 3:
                 System.out.print("\033\143");
+                flag =0;
                 System.out.println("\n____________________________________________________________________________________________");
                 System.out.print("\nEnter your Account Number : ");
                 in.nextLine();
@@ -231,16 +320,21 @@ class BankAccountApp
                 {
                   if(accountno.equals(acc.accountNumber))
                   {
+                      flag = 1;
                       acc.showInfo();
                       System.out.println();
                   }
+                }
+                if(flag == 0)
+                {
+                  System.out.println("\n\nAccount Number not Found !!!");
                 }
                 break;
 
           case 4:
                 System.out.print("\033\143");
                 // To delete a account from the AccountInfo file
-                int flag =0;
+                flag =0;
                 System.out.println("\n____________________________________________________________________________________________");
                 System.out.print("\nEnter the account number to be deleted : ");
                 in.nextLine();
