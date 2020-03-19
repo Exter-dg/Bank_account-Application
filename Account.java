@@ -3,7 +3,7 @@ package bankaccountapp;
 public abstract class Account implements IBaseRate
 {
   private String name;
-  private String sSN; //Social Security Number
+  private String sSN; //Social Security Number 
 
   protected String accountNumber;//both inherited by savings and checkings
   protected double rate;
